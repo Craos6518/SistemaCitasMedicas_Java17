@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 400" width="100%" height="auto">
+  <defs>
+    <style>
+      .box { fill: white; stroke: #000; stroke-width: 2; }
+      .text-title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000; }
+      .text-normal { font-family: Arial, sans-serif; font-size: 14px; fill: #000; }
+      .text-small { font-family: Arial, sans-serif; font-size: 12px; fill: #000; }
+      .line { stroke: #000; stroke-width: 1.5; }
+      .arrow { stroke: #000; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .dashed { stroke-dasharray: 5,5; }
+      .label { font-family: Arial, sans-serif; font-size: 13px; fill: #000; font-weight: bold; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#000" />
+    </marker>
+  </defs>
+
+  <!-- CitaOriginator box -->
+  <rect class="box" x="20" y="140" width="320" height="240"/>
+  <text class="label" x="35" y="165"><<Originator>></text>
+  <text class="text-title" x="35" y="190">CitaOriginator</text>
+  <line class="line" x1="20" y1="200" x2="340" y2="200"/>
+  <text class="text-normal" x="35" y="225">- medico: String</text>
+  <text class="text-normal" x="35" y="250">- tipo: TipoCita</text>
+  <text class="text-normal" x="35" y="275">- fechaHora: LDT</text>
+  <line class="line" x1="20" y1="285" x2="340" y2="285"/>
+  <text class="text-normal" x="35" y="310">+ guardarEstado():</text>
+  <text class="text-small" x="50" y="328">CitaMemento</text>
+  <text class="text-normal" x="35" y="350">+ restaurar(memento:</text>
+  <text class="text-small" x="50" y="368">CitaMemento): void</text>
+
+  <!-- CitaMemento box (center) -->
+  <rect class="box" x="540" y="160" width="300" height="200"/>
+  <text class="label" x="555" y="185"><<Memento>></text>
+  <text class="text-title" x="555" y="210">CitaMemento</text>
+  <line class="line" x1="540" y1="220" x2="840" y2="220"/>
+  <text class="text-normal" x="555" y="245">- medico: String</text>
+  <text class="text-normal" x="555" y="270">- tipo: TipoCita</text>
+  <text class="text-normal" x="555" y="295">- costo: double</text>
+  <line class="line" x1="540" y1="305" x2="840" y2="305"/>
+  <text class="text-small" x="555" y="330">(solo paquete)</text>
+
+  <!-- HistorialCaretaker box -->
+  <rect class="box" x="966" y="140" width="400" height="240"/>
+  <text class="label" x="981" y="165"><<Caretaker>></text>
+  <text class="text-title" x="981" y="190">HistorialCaretaker</text>
+  <line class="line" x1="966" y1="200" x2="1366" y2="200"/>
+  <text class="text-normal" x="981" y="225">- historial:</text>
+  <text class="text-small" x="1000" y="243">Deque&lt;CitaMemento&gt;</text>
+  <line class="line" x1="966" y1="255" x2="1366" y2="255"/>
+  <text class="text-normal" x="981" y="280">+ guardar(originator:</text>
+  <text class="text-small" x="1000" y="298">CitaOriginator): void</text>
+  <text class="text-normal" x="981" y="320">+ deshacer(originator:</text>
+  <text class="text-small" x="1000" y="338">CitaOriginator): void</text>
+  <text class="text-normal" x="981" y="360">+ mostrarHistorial(): void</text>
+
+  <!-- Relationships -->
+  <!-- Originator creates Memento (dashed arrow) -->
+  <path class="arrow dashed" d="M 340 240 L 540 240"/>
+  <text class="label" x="425" y="230">crea</text>
+
+  <!-- Originator restores from Memento (dashed arrow) -->
+  <path class="arrow dashed" d="M 540 260 L 340 260"/>
+  <text class="label" x="425" y="280">restaura</text>
+
+  <!-- Caretaker guards Memento (solid line) -->
+  <path class="arrow" d="M 840 270 L 966 270"/>
+  <text class="label" x="895" y="260">guarda</text>
+  <circle cx="1000" cy="270" r="4" fill="none" stroke="#000" stroke-width="2"/>
+  <path class="line" d="M 1000 270 L 1000 280"/>
+  <text class="text-small" x="965" y="295">0..*</text>
+  <text class="text-small" x="1045" y="295">0..*</text>
+
+  <!-- Labels at bottom -->
+  <text class="label" x="150" y="395">Originator</text>
+  <text class="label" x="630" y="395">Memento</text>
+  <text class="label" x="1080" y="395">Caretaker</text>
+  <text class="text-small" x="595" y="410">(estado encapsulado)</text>
+  <text class="text-small" x="1030" y="410">(no lee el Memento)</text>
+</svg>
