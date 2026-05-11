@@ -540,6 +540,31 @@
         color: #c9d1d9;
         white-space: pre-wrap;
         overflow-x: auto;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+
+      .terminal-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin-top: 1rem;
+        padding-top: 1rem;
+      }
+      .terminal-section:first-child {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+      }
+      .terminal-section h4 {
+        margin: 0 0 0.75rem;
+        color: var(--accent);
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      .terminal-section pre {
+        margin: 0;
+        font-size: 0.82rem;
+        line-height: 1.65;
+        white-space: pre-wrap;
       }
 
       .terminal-log strong {
@@ -2490,125 +2515,155 @@ registro.registrar(<span class="str">"control-cardio"</span>, proto);
             recorrer cada patrón sin perder el orden de ejecución.
           </p>
           <div class="terminal-log">
-            <strong
-              >╔══════════════════════════════════════════════════════════════╗</strong
-            >
-            <strong>║ 1. PATRÓN TEMPLATE METHOD — Flujo de Atención ║</strong>
-            <strong
-              >╚══════════════════════════════════════════════════════════════╝</strong
-            >
-            Template Method garantiza el mismo protocolo para todos los tipos:
-            ╔══════════════════════════════════════════════╗ ║ INICIANDO
-            PROCESO: CONSULTA_INTERNA
-            ╚══════════════════════════════════════════════╝ [1] Verificando
-            cobertura EPS: Sura EPS ✓ [2] Registrando llegada de: Ana García |
-            10:12:22.756398586 [3] Preparando: Orden de hospitalización,
-            historia clínica completa, consentimiento informado. [4] CONSULTA
-            INTERNA: Examen físico completo, evolución, revisión de exámenes
-            previos. Dr. Rodríguez [5] HC actualizada: Evolución de consulta
-            interna registrada. [6] Factura generada: $0 | Cita ID: C001 [7]
-            Cita cerrada en el sistema. ID: C001 ✓ Proceso completado para: Ana
-            García ╔══════════════════════════════════════════════╗ ║ INICIANDO
-            PROCESO: ESPECIALISTA
-            ╚══════════════════════════════════════════════╝ [1] Verificando
-            cobertura EPS: Nueva EPS ✓ [2] Registrando llegada de: Carlos Ríos |
-            10:12:22.793405704 [3] Preparando: Remisión médica, resultados
-            previos, autorización EPS para Cardiología. [4] ESPECIALISTA
-            CARDIOLOGÍA: Valoración especializada. Dr. Vargas [5] HC
-            actualizada: Concepto de especialista (Cardiología) registrado. [6]
-            Factura generada: $0 | Cita ID: C002 [7] Cita cerrada en el sistema.
-            ID: C002 ✓ Proceso completado para: Carlos Ríos
-            ╔══════════════════════════════════════════════╗ ║ INICIANDO
-            PROCESO: RECETA_MEDICA
-            ╚══════════════════════════════════════════════╝ [1] Verificando
-            cobertura EPS: Sanitas EPS ✓ [2] Registrando llegada de: Luz
-            Martínez | 10:12:22.795368283 [3] Preparando: Formulario de receta
-            oficial, verificación de alergias. [4] RECETA MÉDICA: Prescripción
-            de medicamentos, indicaciones de uso, dosis y duración. Dr. Gómez
-            [5] Registro en HC: (omitido para este tipo de cita) [6] Factura
-            generada: $0 | Cita ID: C003 [7] Cita cerrada en el sistema. ID:
-            C003 ✓ Proceso completado para: Luz Martínez
-            ╔══════════════════════════════════════════════════════════════╗ ║
-            2. PATRÓN MEMENTO — Deshacer Cambios en Cita ║
-            ╚══════════════════════════════════════════════════════════════╝
-            Estado inicial: Originator[Dr.Rodríguez | CONSULTA_INTERNA | $0,00 |
-            Dx:Evaluación interna completada] [Memento] Guardando estado actual
-            de la cita... [Caretaker] Estados guardados: 1 Después de edición:
-            Originator[Dr.Restrepo | CONSULTA_INTERNA | $75000,00 |
-            Dx:Evaluación interna completada] [Memento] Guardando estado actual
-            de la cita... [Caretaker] Estados guardados: 2 [Memento] Guardando
-            estado actual de la cita... [Caretaker] Estados guardados: 3 Con
-            descuento: Originator[Dr.Restrepo | CONSULTA_INTERNA | $50000,00 |
-            Dx:Evaluación interna completada] [Caretaker] Historial (3 estados):
-            -&gt; Memento[guardado=2026-05-03T10:12:22.804257858 | Dr.Restrepo |
-            CONSULTA_INTERNA | $75000,00] -&gt;
-            Memento[guardado=2026-05-03T10:12:22.804155050 | Dr.Restrepo |
-            CONSULTA_INTERNA | $75000,00] -&gt;
-            Memento[guardado=2026-05-03T10:12:22.801011990 | Dr.Rodríguez |
-            CONSULTA_INTERNA | $0,00] Deshaciendo cambios: [Memento] Estado
-            restaurado al: 2026-05-03T10:12:22.804257858 Restaurado:
-            Originator[Dr.Restrepo | CONSULTA_INTERNA | $75000,00 |
-            Dx:Evaluación interna completada] [Memento] Estado restaurado al:
-            2026-05-03T10:12:22.804155050 Restaurado: Originator[Dr.Restrepo |
-            CONSULTA_INTERNA | $75000,00 | Dx:Evaluación interna completada]
-            ╔══════════════════════════════════════════════════════════════╗ ║
-            3. PATRÓN VISITOR — Calcular Costos y Generar Reporte ║
-            ╚══════════════════════════════════════════════════════════════╝ ─
-            Calculando costos con CalculadorCostosVisitor: [Visitor-Costos]
-            ConsultaInterna | Sala:Sala 3-B | Costo: $45000 [Visitor-Costos]
-            Especialista | Cardiología | AutorizRequerida:true | Costo: $95000
-            [Visitor-Costos] RecetaMedica | Medicamentos:3 | Psicotropicos:false
-            | Costo: $9000 [Visitor-Costos] HistoriaClinica | HC:HC-2024-001 |
-            PrimerIngreso:true | Costo: $20000 [Visitor-Costos] ConsultaExterna
-            | OrdenRequerida:true | Costo: $35000 TOTAL facturado: $204000 ─
-            Generando reporte con GeneradorReporteVisitor:
-            ═══════════════════════════════════════════════ REPORTE DE ATENCIÓN
-            MÉDICA ═══════════════════════════════════════════════ [1] CONSULTA
-            INTERNA Paciente : Ana García Médico : Dr. Rodríguez Sala : Sala 3-B
-            Costo : $45000 [2] ESPECIALISTA - Cardiología Paciente : Carlos Ríos
-            Médico : Dr. Vargas Autoriza.: Requerida Costo : $95000 [3] RECETA
-            MÉDICA Paciente : Luz Martínez Médico : Dr. Gómez Medicam. : 3
-            Psicotr. : No Costo : $9000 [4] HISTORIA CLÍNICA Paciente : Ana
-            García N° HC : HC-2024-001 Tipo : APERTURA Costo : $20000 [5]
-            CONSULTA EXTERNA Paciente : Carlos Ríos Médico : Dr. Vargas C/Orden
-            : Sí Costo : $35000 ───────────────────────────────────────────────
-            Total citas procesadas: 5
-            ═══════════════════════════════════════════════
-            ╔══════════════════════════════════════════════════════════════╗ ║
-            4. PATRÓN PROTOTYPE — Clonar Citas Recurrentes ║
-            ╚══════════════════════════════════════════════════════════════╝
-            [Registro] Prototipo registrado: control-cardio [Registro]
-            Prototipos disponibles: - control-cardio → ESPECIALISTA [Prototype]
-            Cita clonada: C002 → C010 | Fecha: 2026-08-03 [Prototype] Cita
-            clonada: C002 → C011 | Fecha: 2026-11-03 [Prototype] Cita clonada:
-            C002 → C012 | Fecha: 2027-02-03 Citas de control programadas:
-            Cita[C010 | ESPECIALISTA | Carlos Ríos | Dr.Vargas |
-            2026-08-03T10:12:22.831580382 | $0,00] Cita[C011 | ESPECIALISTA |
-            Carlos Ríos | Dr.Vargas | 2026-11-03T10:12:22.832451739 | $0,00]
-            Cita[C012 | ESPECIALISTA | Carlos Ríos | Dr.Vargas |
-            2027-02-03T10:12:22.832857315 | $0,00]
-            ╔══════════════════════════════════════════════════════════════╗ ║
-            5. PATRÓN STATE — Ciclo de Vida de una Cita ║
-            ╚══════════════════════════════════════════════════════════════╝
-            [State] Cita creada en estado: PROGRAMADA Ciclo normal de atención:
-            [State-PROGRAMADA] Cita confirmada por el paciente. [State]
-            Transición: PROGRAMADA → CONFIRMADA [State-CONFIRMADA] Paciente en
-            consulta — iniciando atención. [State] Transición: CONFIRMADA →
-            EN_ATENCION [State-EN_ATENCION] ✓ Atención finalizada. Cita
-            completada. [State] Transición: EN_ATENCION → COMPLETADA Intento de
-            acción inválida en estado COMPLETADA: [State-COMPLETADA] ✗ No se
-            puede 'cancelar': cita ya finalizada. Ciclo con cancelación y
-            reprogramación: [State] Cita creada en estado: PROGRAMADA
-            [State-PROGRAMADA] Cita confirmada por el paciente. [State]
-            Transición: PROGRAMADA → CONFIRMADA [State-CONFIRMADA] Cita
-            cancelada (paciente no asistió o decisión médica). [State]
-            Transición: CONFIRMADA → CANCELADA [State-CANCELADA] Reprogramando
-            cita cancelada... [State] Transición: CANCELADA → REPROGRAMADA
-            [State-REPROGRAMADA] Nueva fecha confirmada. [State] Transición:
-            REPROGRAMADA → CONFIRMADA [State-CONFIRMADA] Paciente en consulta —
-            iniciando atención. [State] Transición: CONFIRMADA → EN_ATENCIÓN
-            [State-EN_ATENCIÓN] ✓ Atención finalizada. Cita completada. [State]
-            Transición: EN_ATENCIÓN → COMPLETADA Estado final: COMPLETADA
+            <div class="terminal-section">
+              <h4>1. PATRÓN TEMPLATE METHOD — Flujo de Atención</h4>
+              <pre>╔══════════════════════════════════════════════════════════════╗
+║ 1. PATRÓN TEMPLATE METHOD — Flujo de Atención ║
+╚══════════════════════════════════════════════════════════════╝
+Template Method garantiza el mismo protocolo para todos los tipos:
+╔══════════════════════════════════════════════════════╗
+║ INICIANDOPROCESO: CONSULTA_INTERNA
+╚══════════════════════════════════════════════════════╝
+[1] Verificando cobertura EPS: Sura EPS ✓
+[2] Registrando llegada de: Ana García | 10:12:22.756398586
+[3] Preparando: Orden de hospitalización, historia clínica completa, consentimiento informado.
+[4] CONSULTA INTERNA: Examen físico completo, evolución, revisión de exámenes previos. Dr. Rodríguez
+[5] HC actualizada: Evolución de consulta interna registrada.
+[6] Factura generada: $0 | Cita ID: C001
+[7] Cita cerrada en el sistema. ID: C001 ✓ Proceso completado para: Ana García
+╔══════════════════════════════════════════════════════╗
+║ INICIANDO PROCESO: ESPECIALISTA
+╚══════════════════════════════════════════════════════╝
+[1] Verificando cobertura EPS: Nueva EPS ✓
+[2] Registrando llegada de: Carlos Ríos | 10:12:22.793405704
+[3] Preparando: Remisión médica, resultados previos, autorización EPS para Cardiología.
+[4] ESPECIALISTA CARDIOLOGÍA: Valoración especializada. Dr. Vargas
+[5] HC actualizada: Concepto de especialista (Cardiología) registrado.
+[6] Factura generada: $0 | Cita ID: C002
+[7] Cita cerrada en el sistema. ID: C002 ✓ Proceso completado para: Carlos Ríos
+╔══════════════════════════════════════════════════════╗
+║ INICIANDO PROCESO: RECETA_MEDICA
+╚══════════════════════════════════════════════════════╝
+[1] Verificando cobertura EPS: Sanitas EPS ✓
+[2] Registrando llegada de: Luz Martínez | 10:12:22.795368283
+[3] Preparando: Formulario de receta oficial, verificación de alergias.
+[4] RECETA MÉDICA: Prescripción de medicamentos, indicaciones de uso, dosis y duración. Dr. Gómez
+[5] Registro en HC: (omitido para este tipo de cita)
+[6] Factura generada: $0 | Cita ID: C003
+[7] Cita cerrada en el sistema. ID: C003 ✓ Proceso completado para: Luz Martínez</pre>
+            </div>
+            <div class="terminal-section">
+              <h4>2. PATRÓN MEMENTO — Deshacer Cambios en Cita</h4>
+              <pre>╔══════════════════════════════════════════════════════════════╗
+║ 2. PATRÓN MEMENTO — Deshacer Cambios en Cita ║
+╚══════════════════════════════════════════════════════════════╝
+Estado inicial: Originator[Dr.Rodríguez | CONSULTA_INTERNA | $0,00 | Dx:Evaluación interna completada] [Memento] Guardando estado actual de la cita...
+[Caretaker] Estados guardados: 1
+Después de edición: Originator[Dr.Restrepo | CONSULTA_INTERNA | $75000,00 | Dx:Evaluación interna completada] [Memento] Guardando estado actual de la cita...
+[Caretaker] Estados guardados: 2
+[Memento] Guardando estado actual de la cita...
+[Caretaker] Estados guardados: 3
+Con descuento: Originator[Dr.Restrepo | CONSULTA_INTERNA | $50000,00 | Dx:Evaluación interna completada]
+[Caretaker] Historial (3 estados):
+-> Memento[guardado=2026-05-03T10:12:22.804257858 | Dr.Restrepo | CONSULTA_INTERNA | $75000,00]
+-> Memento[guardado=2026-05-03T10:12:22.804155050 | Dr.Restrepo | CONSULTA_INTERNA | $75000,00]
+-> Memento[guardado=2026-05-03T10:12:22.801011990 | Dr.Rodríguez | CONSULTA_INTERNA | $0,00]
+Deshaciendo cambios:
+[Memento] Estado restaurado al: 2026-05-03T10:12:22.804257858
+Restaurado: Originator[Dr.Restrepo | CONSULTA_INTERNA | $75000,00 | Dx:Evaluación interna completada]
+[Memento] Estado restaurado al: 2026-05-03T10:12:22.804155050
+Restaurado: Originator[Dr.Restrepo | CONSULTA_INTERNA | $75000,00 | Dx:Evaluación interna completada]</pre>
+            </div>
+            <div class="terminal-section">
+              <h4>3. PATRÓN VISITOR — Calcular Costos y Generar Reporte</h4>
+              <pre>╔══════════════════════════════════════════════════════════════╗
+║ 3. PATRÓN VISITOR — Calcular Costos y Generar Reporte ║
+╚══════════════════════════════════════════════════════════════╝
+Calculando costos con CalculadorCostosVisitor: [Visitor-Costos]
+ConsultaInterna | Sala:Sala 3-B | Costo: $45000
+Especialista | Cardiología | AutorizRequerida:true | Costo: $95000
+RecetaMedica | Medicamentos:3 | Psicotropicos:false | Costo: $9000
+HistoriaClinica | HC:HC-2024-001 | PrimerIngreso:true | Costo: $20000
+ConsultaExterna | OrdenRequerida:true | Costo: $35000
+TOTAL facturado: $204000
+Generando reporte con GeneradorReporteVisitor:
+═══════════════════════════════════════════════════════════════ REPORTE DE ATENCIÓN MÉDICA ═══════════════════════════════════════════════════════════════
+[1] CONSULTA INTERNA
+Paciente : Ana García
+Médico : Dr. Rodríguez
+Sala : Sala 3-B
+Costo : $45000
+[2] ESPECIALISTA - Cardiología
+Paciente : Carlos Ríos
+Médico : Dr. Vargas
+Autoriza.: Requerida
+Costo : $95000
+[3] RECETA MÉDICA
+Paciente : Luz Martínez
+Médico : Dr. Gómez
+Medicam. : 3
+Psicotrop. : No
+Costo : $9000
+[4] HISTORIA CLÍNICA
+Paciente : Ana García
+N° HC : HC-2024-001
+Tipo : APERTURA
+Costo : $20000
+[5] CONSULTA EXTERNA
+Paciente : Carlos Ríos
+Médico : Dr. Vargas
+C/Orden : Sí
+Costo : $35000
+───────────────────────────────────────────────
+Total citas procesadas: 5
+═══════════════════════════════════════════════════════════════</pre>
+            </div>
+            <div class="terminal-section">
+              <h4>4. PATRÓN PROTOTYPE — Clonar Citas Recurrentes</h4>
+              <pre>╔══════════════════════════════════════════════════════════════╗
+║ 4. PATRÓN PROTOTYPE — Clonar Citas Recurrentes ║
+╚══════════════════════════════════════════════════════════════╝
+[Registro] Prototipo registrado: control-cardio
+[Registro] Prototipos disponibles: - control-cardio → ESPECIALISTA
+[Prototype] Cita clonada: C002 → C010 | Fecha: 2026-08-03
+[Prototype] Cita clonada: C002 → C011 | Fecha: 2026-11-03
+[Prototype] Cita clonada: C002 → C012 | Fecha: 2027-02-03
+Citas de control programadas:
+Cita[C010 | ESPECIALISTA | Carlos Ríos | Dr.Vargas | 2026-08-03T10:12:22.831580382 | $0,00]
+Cita[C011 | ESPECIALISTA | Carlos Ríos | Dr.Vargas | 2026-11-03T10:12:22.832451739 | $0,00]
+Cita[C012 | ESPECIALISTA | Carlos Ríos | Dr.Vargas | 2027-02-03T10:12:22.832857315 | $0,00]</pre>
+            </div>
+            <div class="terminal-section">
+              <h4>5. PATRÓN STATE — Ciclo de Vida de una Cita</h4>
+              <pre>╔══════════════════════════════════════════════════════════════╗
+║ 5. PATRÓN STATE — Ciclo de Vida de una Cita ║
+╚══════════════════════════════════════════════════════════════╝
+[State] Cita creada en estado: PROGRAMADA
+Ciclo normal de atención:
+[State-PROGRAMADA] Cita confirmada por el paciente.
+[State] Transición: PROGRAMADA → CONFIRMADA
+[State-CONFIRMADA] Paciente en consulta — iniciando atención.
+[State] Transición: CONFIRMADA → EN_ATENCION
+[State-EN_ATENCION] ✓ Atención finalizada. Cita completada.
+[State] Transición: EN_ATENCION → COMPLETADA
+Intento de acción inválida en estado COMPLETADA:
+[State-COMPLETADA] ✗ No se puede 'cancelar': cita ya finalizada.
+Ciclo con cancelación y reprogramación:
+[State] Cita creada en estado: PROGRAMADA
+[State-PROGRAMADA] Cita confirmada por el paciente.
+[State] Transición: PROGRAMADA → CONFIRMADA
+[State-CONFIRMADA] Cita cancelada (paciente no asistió o decisión médica).
+[State] Transición: CONFIRMADA → CANCELADA
+[State-CANCELADA] Reprogramando cita cancelada...
+[State] Transición: CANCELADA → REPROGRAMADA
+[State-REPROGRAMADA] Nueva fecha confirmada.
+[State] Transición: REPROGRAMADA → CONFIRMADA
+[State-CONFIRMADA] Paciente en consulta — iniciando atención.
+[State] Transición: CONFIRMADA → EN_ATENCIÓN
+[State-EN_ATENCIÓN] ✓ Atención finalizada. Cita completada.
+[State] Transición: EN_ATENCIÓN → COMPLETADA
+Estado final: COMPLETADA</pre>
+            </div>
           </div>
         </div>
       </section>
