@@ -48,8 +48,3 @@ Notas:
 - `prototype`: Plantillas clonables de citas.
 - `state`: Máquina de estados para el ciclo de vida de una cita.
 - `main`: Demo y puntos de entrada para pruebas y ejemplos.
-
-Si quieres, puedo:
-- Añadir enlaces desde `README.md` a clases claves.
-- Generar esqueletos faltantes o comprobar declaraciones de `package`.
-```
